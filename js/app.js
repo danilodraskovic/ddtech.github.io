@@ -67,7 +67,7 @@ window.onload = () => {
         }
     }
 
-    if (window.location.pathname == 'ddtech.github.io/index.html' || window.location.pathname == 'ddtech.github.io/') {
+    if (window.location.pathname == '/ddtech.github.io/index.html' || window.location.pathname == '/ddtech.github.io/') {
         var iconDiv = document.querySelectorAll('.icon-wrapper');
         var textDiv = document.querySelectorAll('.text-wrapper');
     
@@ -77,7 +77,7 @@ window.onload = () => {
         }
     }
 
-    if (window.location.pathname == 'ddtech.github.io/store.html') {
+    if (window.location.pathname == '/ddtech.github.io/store.html') {
         let brands = [];
         let types = [];
         let categories = [];
