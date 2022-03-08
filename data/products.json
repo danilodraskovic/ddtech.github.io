@@ -1,0 +1,322 @@
+[
+    {
+        "id": 1,
+        "name": "PHILIPS LED V Line series - 273V7QDSB/00",
+        "brandID": 1,
+        "categories": [2, 3],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 240,
+            "currentPrice": 200
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor1",
+            "alt": "PHILIPS LED V Line serija - 273V7QDSB/00"
+        }
+    },
+    {
+        "id": 2,
+        "name": "HP Gaming keyboard OMEN SEQUENCER US (Black) 2VN99AA",
+        "brandID": 3,
+        "categories": [1],
+        "typeID": 4,
+        "price": {
+            "oldPrice": 200,
+            "currentPrice": 150
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard1",
+            "alt": "HP Gaming keyboard OMEN SEQUENCER US (Black) 2VN99AA"
+        }
+    },
+    {
+        "id": 3,
+        "name": "DELL Wired mouse MS116 (Black)",
+        "brandID": 4,
+        "categories": [2],
+        "typeID": 2,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 13
+        },
+        "availability": true,
+        "photo": {
+            "src": "mouse1",
+            "alt": "DELL Wired mouse MS116 (Black)"
+        }
+    },
+    {
+        "id": 4,
+        "name": "SAMSUNG Wireless earphones GALAXY BUDS LIVE TWS (Black) SMR180NZKAEUG",
+        "brandID": 2,
+        "categories": [4],
+        "typeID": 3,
+        "price": {
+            "oldPrice": 230,
+            "currentPrice": 150
+        },
+        "availability": false,
+        "photo": {
+            "src": "headphones1",
+            "alt": "SAMSUNG Wireless earphones GALAXY BUDS LIVE TWS (Black) SMR180NZKAEUG"
+        }
+    },
+    {
+        "id": 5,
+        "name": "PHILIPS Wireless headphones TAH4205BL/00 (Blue)",
+        "brandID": 1,
+        "categories": [4, 2],
+        "typeID": 3,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 60
+        },
+        "availability": true,
+        "photo": {
+            "src": "headphones2",
+            "alt": "PHILIPS Wireless headphones TAH4205BL/00 (Blue)"
+        }
+    },
+    {
+        "id": 6,
+        "name": "HP Gaming mouse OMEN REACTOR 2VP02AA",
+        "brandID": 3,
+        "categories": [1, 3],
+        "typeID": 2,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 70
+        },
+        "availability": true,
+        "photo": {
+            "src": "mouse2",
+            "alt": "HP Gaming mouse OMEN REACTOR 2VP02AA"
+        }
+    },
+    {
+        "id": 7,
+        "name": "LOGITECH Wireless keyboards MX KEYS US (Graphite-Black) 920-009415",
+        "brandID": 5,
+        "categories": [2, 3],
+        "typeID": 4,
+        "price": {
+            "oldPrice": 200,
+            "currentPrice": 150
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard2",
+            "alt": "LOGITECH Wireless keyboards MX KEYS US (Graphite-Black) 920-009415"
+        }
+    },
+    {
+        "id": 8,
+        "name": "SAMSUNG Curved monitor 34\" CH89 Premium LC34H890WGRXEN",
+        "brandID": 2,
+        "categories": [3],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 850,
+            "currentPrice": 760
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor2",
+            "alt": "SAMSUNG Curved monitor 34\" CH89 Premium LC34H890WGRXEN"
+        }
+    },
+    {
+        "id": 9,
+        "name": "DELL Gaming monitor 27 144Hz - S2721HGF",
+        "brandID": 4,
+        "categories": [1],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 470,
+            "currentPrice": 430
+        },
+        "availability": false,
+        "photo": {
+            "src": "monitor3",
+            "alt": "DELL Gaming monitor 27 144Hz - S2721HGF"
+        }
+    },
+    {
+        "id": 10,
+        "name": "LOGITECH Wireless keyboard K230 US (Black) - 920-003347",
+        "brandID": 5,
+        "categories": [4],
+        "typeID": 4,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 35
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard3",
+            "alt": "LOGITECH Wireless keyboard K230 US (Black) - 920-003347"
+        }
+    },
+    {
+        "id": 11,
+        "name": "DELL Wireless mouse Premier MS7421W (Gray)",
+        "brandID": 4,
+        "categories": [2, 4],
+        "typeID": 2,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 100
+        },
+        "availability": true,
+        "photo": {
+            "src": "mouse3",
+            "alt": "DELL Wireless mouse Premier MS7421W (Gray)"
+        }
+    },
+    {
+        "id": 12,
+        "name": "SAMSUNG Earphones Basic EO-IA500-BBE (Black)",
+        "brandID": 2,
+        "categories": [4],
+        "typeID": 3,
+        "price": {
+            "oldPrice": 30,
+            "currentPrice": 15
+        },
+        "availability": true,
+        "photo": {
+            "src": "headphones3",
+            "alt": "SAMSUNG Earphones Basic EO-IA500-BBE (Black)"
+        }
+    },
+    {
+        "id": 13,
+        "name": "OMEN by HP Gaming monitor 25i IPS 22J05AA",
+        "brandID": 3,
+        "categories": [1],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 370,
+            "currentPrice": 340
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor4",
+            "alt": "OMEN by HP Gaming monitor 25i IPS 22J05AA"
+        }
+    },
+    {
+        "id": 14,
+        "name": "LOGITECH Wireless keyboard Pop Keys Daydream (White/Purple) 920-010736",
+        "brandID": 5,
+        "categories": [2],
+        "typeID": 4,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 130
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard4",
+            "alt": "LOGITECH Wireless keyboard Pop Keys Daydream (White/Purple) 920-010736"
+        }
+    },
+    {
+        "id": 15,
+        "name": "PHILIPS Wired headphones Fidelio X3 (Black)",
+        "brandID": 1,
+        "categories": [4],
+        "typeID": 3,
+        "price": {
+            "oldPrice": 430,
+            "currentPrice": 400
+        },
+        "availability": false,
+        "photo": {
+            "src": "headphones4",
+            "alt": "PHILIPS Wired headphones Fidelio X3 (Black)"
+        }
+    },
+    {
+        "id": 16,
+        "name": "DELL Monitor 24 VA SE2422H",
+        "brandID": 4,
+        "categories": [2, 4],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 220,
+            "currentPrice": 200
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor5",
+            "alt": "DELL Monitor 24 VA SE2422H"
+        }
+    },
+    {
+        "id": 17,
+        "name": "SAMSUNG Gaming monitor 24 VA Odyssey G35TF LF24G35TFWUXEN",
+        "brandID": 2,
+        "categories": [1, 3],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 330,
+            "currentPrice": 300
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor6",
+            "alt": "SAMSUNG Gaming monitor 24 VA Odyssey G35TF LF24G35TFWUXEN"
+        }
+    },
+    {
+        "id": 18,
+        "name": "HP OMEN Gaming keyboard Encoder US (Black) 6YW75AA",
+        "brandID": 3,
+        "categories": [1],
+        "typeID": 4,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 160
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard5",
+            "alt": "HP OMEN Gaming keyboard Encoder US (Black) 6YW75AA"
+        }
+    },
+    {
+        "id": 19,
+        "name": "LOGITECH Wireless vertical mouse MX VERTICAL 910-005448",
+        "brandID": 5,
+        "categories": [3],
+        "typeID": 2,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 150
+        },
+        "availability": true,
+        "photo": {
+            "src": "mouse4",
+            "alt": "LOGITECH Wireless vertical mouse MX VERTICAL 910-005448"
+        }
+    },
+    {
+        "id": 20,
+        "name": "PHILIPS Monitor 49 P line SuperWide curved VA - 499P9H/00",
+        "brandID": 1,
+        "categories": [3, 1],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 1800,
+            "currentPrice": 1640
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor7",
+            "alt": "PHILIPS Monitor 49 P line SuperWide curved VA - 499P9H/00"
+        }
+    }
+]
