@@ -8,7 +8,7 @@
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .margin-top {
@@ -433,6 +433,8 @@ footer #socials .fa-linkedin-in {
   -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
           box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   border-radius: 10px;
+  -webkit-transition: .3s;
+  transition: .3s;
 }
 
 .product:hover {
@@ -498,22 +500,37 @@ footer #socials .fa-linkedin-in {
   border-radius: 0 0 10px 10px;
 }
 
-.product .actions button {
-  width: 50%;
+.product .actions .add-to-cart {
+  width: 100%;
   border: none;
   padding: 20px 0;
-}
-
-.product .actions button:first-child {
   background-color: #09D0AB;
   color: #FFF;
-  border-radius: 0 0 0 10px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  border-radius: 0 0 10px 10px;
 }
 
-.product .actions button:nth-child(2) {
-  background-color: #FFF;
-  color: #09D0AB;
-  border-radius: 0 0 10px 0;
+.product .actions .add-to-cart:hover {
+  background-color: #07876F;
+}
+
+.product .actions .add-to-cart:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.product .actions .add-to-cart-disabled {
+  width: 100%;
+  border: none;
+  padding: 20px 0;
+  background-color: #333;
+  color: #F2F2F2;
+  border-radius: 0 0 10px 10px;
+}
+
+.product .actions .add-to-cart-disabled:hover {
+  cursor: default;
 }
 
 .product .actions i {
@@ -592,12 +609,35 @@ footer #socials .fa-linkedin-in {
   font-size: 40px;
   color: #09D0AB;
   margin-right: 25px;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+#controls i:hover {
+  color: #000;
+  cursor: pointer;
 }
 
 .filterNarrow {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.img-in-cart {
+  width: 100px !important;
+}
+
+.img-in-cart img {
+  width: 100px !important;
+}
+
+#cart {
+  width: 100%;
 }
 
 @media screen and (max-width: 1220px) {
@@ -654,6 +694,9 @@ footer #socials .fa-linkedin-in {
   .product {
     width: 30%;
   }
+  .product .product-info {
+    padding: 15px;
+  }
   .product:nth-child(4n) {
     margin-right: 20px;
   }
@@ -669,23 +712,8 @@ footer #socials .fa-linkedin-in {
   .hamburger {
     display: block !important;
   }
-}
-
-@media screen and (max-width: 768px) {
-  .actions {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-  .actions button {
-    width: 100% !important;
-  }
-  .actions button:first-child {
-    border-radius: 0 !important;
-  }
-  .actions button:nth-child(2) {
-    border-radius: 0 0 10px 10px !important;
+  .hamburger:focus {
+    outline: none !important;
   }
 }
 

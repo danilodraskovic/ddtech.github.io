@@ -11,7 +11,7 @@ $elevation: #F2F2F2;
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .margin-top {
@@ -291,6 +291,7 @@ footer {
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     border-radius: 10px;
+    transition: .3s;
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 12px, rgba(0, 0, 0, 0.24) 0px 4px 8px;
     }
@@ -328,19 +329,31 @@ footer {
         align-items: center;
         width: 100%;
         border-radius: 0 0 10px 10px;
-        button {
-            width: 50%;
+        .add-to-cart {
+            width: 100%;
             border: none;
             padding: 20px 0;
-            &:first-child {
-                background-color: $accent-color;
-                color: #FFF;
-                border-radius: 0 0 0 10px;
+            background-color: $accent-color;
+            color: #FFF;
+            transition: .3s;
+            border-radius: 0 0 10px 10px;
+            &:hover {
+                background-color: #07876F;
             }
-            &:nth-child(2) {
-                background-color: #FFF;
-                color: $accent-color;
-                border-radius: 0 0 10px 0;
+            &:focus {
+                outline: none !important;
+                border: none !important;
+            }
+        }
+        .add-to-cart-disabled {
+            width: 100%;
+            border: none;
+            padding: 20px 0;
+            background-color: #333;
+            color: #F2F2F2;
+            border-radius: 0 0 10px 10px;
+            &:hover {
+                cursor: default;
             }
         }
         i {
@@ -400,11 +413,31 @@ footer {
         font-size: 40px;
         color: $accent-color;
         margin-right: 25px;
+        transition: .3s;
+        &:hover {
+            color: #000;
+            cursor: pointer;
+        }
     }
 }
 
 .filterNarrow {
     display: flex !important;
+}
+
+.overflow-scroll{
+    overflow: scroll;
+}
+
+.img-in-cart{
+    width: 100px !important;
+    img {
+        width: 100px !important;
+    }
+}
+
+#cart {
+    width: 100%;
 }
 
 @media screen and (max-width: 1220px) {
@@ -451,6 +484,9 @@ footer {
     }
     .product {
         width: 30%;
+        .product-info {
+            padding: 15px;
+        }
         &:nth-child(4n) {
             margin-right: 20px;
         }
@@ -466,20 +502,8 @@ footer {
     }
     .hamburger {
         display: block !important;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .actions {
-        flex-direction: column;
-        button {
-            width: 100% !important;
-            &:first-child {
-                border-radius: 0 !important;
-            }
-            &:nth-child(2) {
-                border-radius: 0 0 10px 10px !important;
-            }
+        &:focus {
+            outline: none !important;
         }
     }
 }

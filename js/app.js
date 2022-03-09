@@ -78,9 +78,21 @@ window.onload = () => {
     }
 
     if (window.location.pathname == '/ddtech.github.io/store.html') {
+        productsInCart = getItemFromLocalStorage('cart');
+        //cartQty();
+        
         let brands = [];
         let types = [];
         let categories = [];
+        let products = [];
+        var productsInCart = [];
+
+        function setItemToLocalStorage(name, data){
+            localStorage.setItem(name, JSON.stringify(data));
+        }
+        function getItemFromLocalStorage(name){
+            return JSON.parse(localStorage.getItem(name));
+        }
     
         getData("brands", showBrands);
     
@@ -108,7 +120,7 @@ window.onload = () => {
             let html = "";
             data.forEach(brand => {
                 html += `<li class="list-group-item">
-                           <input type="checkbox" value="${brand.id}" class="brand" name="brands"/> ${brand.name}
+                           <input type="checkbox" value="${brand.id}" class="brand" name="brands" /> ${brand.name}
                         </li>`;
             });
             document.getElementById('brandContainer').innerHTML = html;
@@ -120,7 +132,7 @@ window.onload = () => {
             let html = "";
             data.forEach(type => {
                 html += `<li class="list-group-item">
-                           <input type="checkbox" value="${type.id}" class="type" name="types"/> ${type.name}
+                           <input type="checkbox" value="${type.id}" class="type" name="types" /> ${type.name}
                         </li>`;
             });
             document.getElementById('typeContainer').innerHTML = html;
@@ -132,7 +144,7 @@ window.onload = () => {
             let html = "";
             data.forEach(category => {
                 html += `<li class="list-group-item">
-                           <input type="checkbox" value="${category.id}" class="category" name="categories"/> ${category.name}
+                           <input type="checkbox" value="${category.id}" class="category" name="categories" /> ${category.name}
                         </li>`;
             });
             document.getElementById('categoryContainer').innerHTML = html;
@@ -141,7 +153,70 @@ window.onload = () => {
             $(".type").change(filterChange);
             $(".category").change(filterChange);
             getData("products", showProducts);
-        }    
+        } 
+        
+        function ispisCarta() {
+            let html = '';
+            productsInCart = getItemFromLocalStorage("cart");
+            if(productsInCart){
+                let totalSum = 0;
+                for (let product of productsInCart) {
+                    for (let item of products){
+                        if (product.id == item.id) {
+                            html += `
+                            <div class="card border-0 item-in-cart" data-id="${product.id}">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <img src="img/${item.photo.src}.png" class="img-in-cart w-100" alt="">
+                                        <button data-id="${product.id}" class="btn btn-outline-danger remove-from-cart">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                    <p class="mt-3">
+                                        ${item.name}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div class="form-row">
+                                            <button class="btn btn-outline-primary quantity-minus">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" class="form-control w-25 mx-2 quantity" unitPrice="${item.price.currentPrice}" value="1" min="1">
+                                            <button class="btn btn-outline-primary quantity-plus">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <p class="mb-0">$ <span class="item-in-cart-cost">${item.price.currentPrice}</span></p>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>`;
+                            totalSum += parseInt(item.price.currentPrice);
+                        }
+                    }
+                    document.getElementById('total').innerHTML = totalSum;
+                    document.getElementById('cart').innerHTML = html;
+                    $(".remove-from-cart").click(removeFromCart);
+                        function removeFromCart(){
+                        let deleteItem = $(this).data("id");
+                        let newArray = [];
+                        for(let p of productsInCart){
+                            if(p.id == deleteItem){
+                                continue;
+                            }
+                            newArray.push(p);
+                        }
+                        productsInCart = newArray;
+                        setItemToLocalStorage("cart", productsInCart);
+                        $(this).parentsUntil("#cart").remove();
+                        cartTotal();
+                        ispisCarta();
+                    }
+                }
+            }
+            else{
+                document.getElementById('cart').innerHTML = html;
+            }
+        }
 
         function showProducts(data) {
             data = search(data);
@@ -154,27 +229,111 @@ window.onload = () => {
             let html = "";
             for(let product of data){
                 html+= `
-                <div data-aos="fade-up" class="product">
+                <div class="product">
                     <div class="product-info">
                         <img class="w-100 product-photo" src="img/${product.photo.src}.png" alt="${product.photo.alt}" />
-                        <h3>${checkBrand(product.brandID)}</h3>
+                        <h3 class="product-brand">${checkBrand(product.brandID)}</h3>
                         <p class="product-name">${product.name}</p>
                         <h4 class="product-price">$${product.price.currentPrice}</h4>
                         <p>${checkPrice(product.price.oldPrice)}</p>
-                        <p>${checkCategories(product.categories)}</p>
+                        <p>Categories: ${checkCategories(product.categories)}</p>
                         ${checkAvailability(product.availability)}
                     </div>
                     <div class="actions">
-                        <button class="add-to-cart" role="button">ADD TO CART</button>
-                        <button role="button"><i class="fa-solid fa-heart"></i></button>
+                        <button data-id="${product.id}" ${checkAddToCart(product.availability)}>ADD TO CART</button>
                     </div>
                 </div>
                 `;
             }
-            if(!data.length){
+            if(data.length < 1) {
                 html = `<p class="text-center w-100 margin-top">No available products</p>`;
             }
             $("#products-wrapper").html(html);
+            products = data;
+            $(".add-to-cart").click(function () {
+                //setItemToLocalStorage("cart", productsInCart);
+                productsInCart = getItemFromLocalStorage("cart");
+                let currentItemId = $(this).data("id");
+                if (productsInCart != undefined && productsInCart && productsInCart.length != 0) {
+                    if (alreadyAdded()) {
+                        alert('Pusi kurac');
+                    } else {
+                        addNew();
+                    }
+                } 
+                else {
+                    addFirst();
+                }
+                function addFirst(){
+                    let newProductArray = [];
+                    newProductArray.push({
+                        id:currentItemId,
+                        quantity: 1
+                    });
+                    setItemToLocalStorage('cart', newProductArray);
+                }
+                function alreadyAdded(){
+                    let count = 0;
+                    for(let p of productsInCart){
+                        if(p.id == currentItemId){
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+                function addNew(){
+                    productsInCart.push({
+                        id: currentItemId,
+                        quantity: 1
+                    });
+                    setItemToLocalStorage("cart", productsInCart);
+                }
+            
+            });
+
+            $("#cart").delegate(".quantity-plus","click",function () {
+
+                let q =$(this).siblings(".quantity").val();
+                let p = $(this).siblings(".quantity").attr("unitPrice");
+                let newQ = Number(q)+1;
+                let newCost = p * newQ;
+                $(this).siblings(".quantity").val(newQ);
+                $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
+                cartTotal();
+            })
+            
+            $("#cart").delegate(".quantity-minus","click",function () {
+            
+                let q =$(this).siblings(".quantity").val();
+                let p = $(this).siblings(".quantity").attr("unitPrice");
+                if(q>1){
+            
+                    let newQ = Number(q)-1;
+                    let newCost = p * newQ;
+                    $(this).siblings(".quantity").val(newQ);
+                    $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
+                    cartTotal();
+                }
+            
+            })
+            
+            $("#cart").delegate(".quantity","keyup change",function () {
+            
+                let q =$(this).val();
+                let p = $(this).attr("unitPrice");
+                if(q>1){
+            
+                    let newQ = Number(q);
+                    let newCost = p * newQ;
+                    $(this).val(newQ);
+                    $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
+                    cartTotal();
+            
+                }else{
+                    alert("more than one");
+                }
+            
+            });
         }
 
         function checkBrand(id) {
@@ -219,11 +378,21 @@ window.onload = () => {
             return html;
         }
 
+        function checkAddToCart(availability) {
+            let html = '';
+            if (availability) {
+                html = 'class="add-to-cart"';
+            } else {
+                html = 'class="add-to-cart-disabled" disabled';
+            }
+            return html;
+        }
+
         function search(data){
-            let searchValue = $("#search").val().toLowerCase();
-            if(searchValue){
-                return data.filter(function(el){
-                    return el.name.toLowerCase().indexOf(searchValue) !== -1;
+            let searchInput = $("#search").val().toLowerCase();
+            if(searchInput) {
+                return data.filter(function(element) {
+                    return element.name.toLowerCase().indexOf(searchInput) !== -1;
                 })
             }
             return data;
@@ -312,6 +481,34 @@ window.onload = () => {
 
         apply.addEventListener('click', () => {
             document.getElementById('filters-wrapper').classList.remove('filterNarrow');
+        });
+
+        var openCart = document.getElementById('open-cart');
+
+        function cartTotal(){
+
+            // item-in-cart-count
+            productsInCart = getItemFromLocalStorage("cart");
+            
+            if(productsInCart){
+                let count = productsInCart.length;
+                $(".item-in-cart-count").html(count);
+            }
+            else{
+                $(".item-in-cart-count").html(0);
+            }
+        
+        }
+
+        openCart.addEventListener('click', () => {
+            productsInCart = getItemFromLocalStorage('cart');
+            cartTotal();
+            ispisCarta();
+        })
+
+        $("#clear-cart").click(() => {
+            localStorage.removeItem("cart");
+            cartTotal();
         });
     }
 }
