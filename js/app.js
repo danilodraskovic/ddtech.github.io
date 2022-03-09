@@ -79,7 +79,6 @@ window.onload = () => {
 
     if (window.location.pathname == '/ddtech.github.io/store.html') {
         productsInCart = getItemFromLocalStorage('cart');
-        //cartQty();
         
         let brands = [];
         let types = [];
@@ -159,7 +158,6 @@ window.onload = () => {
             let html = '';
             productsInCart = getItemFromLocalStorage("cart");
             if(productsInCart){
-                let totalSum = 0;
                 for (let product of productsInCart) {
                     for (let item of products){
                         if (product.id == item.id) {
@@ -190,10 +188,8 @@ window.onload = () => {
                                     <hr>
                                 </div>
                             </div>`;
-                            totalSum += parseInt(item.price.currentPrice);
                         }
                     }
-                    document.getElementById('total').innerHTML = totalSum;
                     document.getElementById('cart').innerHTML = html;
                     $(".remove-from-cart").click(removeFromCart);
                         function removeFromCart(){
@@ -210,10 +206,10 @@ window.onload = () => {
                         $(this).parentsUntil("#cart").remove();
                         cartTotal();
                         ispisCarta();
+                        cartTotalPrice();
                     }
                 }
-            }
-            else{
+            } else {
                 document.getElementById('cart').innerHTML = html;
             }
         }
@@ -251,7 +247,6 @@ window.onload = () => {
             $("#products-wrapper").html(html);
             products = data;
             $(".add-to-cart").click(function () {
-                //setItemToLocalStorage("cart", productsInCart);
                 productsInCart = getItemFromLocalStorage("cart");
                 let currentItemId = $(this).data("id");
                 if (productsInCart != undefined && productsInCart && productsInCart.length != 0) {
@@ -259,10 +254,12 @@ window.onload = () => {
                         alert('Pusi kurac');
                     } else {
                         addNew();
+                        cartTotalPrice();
                     }
                 } 
                 else {
                     addFirst();
+                    cartTotalPrice();
                 }
                 function addFirst(){
                     let newProductArray = [];
@@ -300,6 +297,7 @@ window.onload = () => {
                 $(this).siblings(".quantity").val(newQ);
                 $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
                 cartTotal();
+                cartTotalPrice();
             })
             
             $("#cart").delegate(".quantity-minus","click",function () {
@@ -313,6 +311,7 @@ window.onload = () => {
                     $(this).siblings(".quantity").val(newQ);
                     $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
                     cartTotal();
+                    cartTotalPrice();
                 }
             
             })
@@ -328,6 +327,7 @@ window.onload = () => {
                     $(this).val(newQ);
                     $(this).parent().siblings("p").find(".item-in-cart-cost").html(newCost.toFixed(2));
                     cartTotal();
+                    cartTotalPrice();
             
                 }else{
                     alert("more than one");
@@ -486,8 +486,6 @@ window.onload = () => {
         var openCart = document.getElementById('open-cart');
 
         function cartTotal(){
-
-            // item-in-cart-count
             productsInCart = getItemFromLocalStorage("cart");
             
             if(productsInCart){
@@ -499,16 +497,35 @@ window.onload = () => {
             }
         
         }
+        function cartTotalPrice(){
+            count = getItemFromLocalStorage("cart").length;
+            if(count > 0) {
+                let totalCost = $(".item-in-cart-cost").toArray().map(el=>el.innerHTML).reduce((x,y)=>Number(x)+Number(y));
+                $(".total").html(`
+    
+                    <div class="d-flex justify-content-between font-weight-bold px-3">
+                        <h4>Total</h4>
+                        <h4>$ <span class="cart-cost-total">${Number(totalCost).toFixed(2)}</span></h4>
+                    </div>
+    
+                `)
+            } else {
+                $(".total").html("empty cart")
+            }
+        }
 
         openCart.addEventListener('click', () => {
             productsInCart = getItemFromLocalStorage('cart');
             cartTotal();
             ispisCarta();
+            cartTotalPrice();
         })
 
         $("#clear-cart").click(() => {
             localStorage.removeItem("cart");
             cartTotal();
+            ispisCarta();
+            cartTotalPrice();
         });
     }
 }
