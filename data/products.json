@@ -318,5 +318,165 @@
             "src": "monitor7",
             "alt": "PHILIPS Monitor 49 P line SuperWide curved VA - 499P9H/00"
         }
+    },
+    {
+        "id": 21,
+        "name": "SAMSUNG Monitor 24 IPS LS24A400VEUXEN",
+        "brandID": 2,
+        "categories": [2, 4],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 330,
+            "currentPrice": 300
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor8",
+            "alt": "SAMSUNG Monitor 24 IPS LS24A400VEUXEN"
+        }
+    },
+    {
+        "id": 22,
+        "name": "SAMSUNG Wireless earphones Buds Pro TWS (Silver) SM R190 NZS",
+        "brandID": 2,
+        "categories": [4],
+        "typeID": 3,
+        "price": {
+            "oldPrice": 300,
+            "currentPrice": 210
+        },
+        "availability": true,
+        "photo": {
+            "src": "headphones5",
+            "alt": "SAMSUNG Wireless earphones Buds Pro TWS (Silver) SM R190 NZS"
+        }
+    },
+    {
+        "id": 23,
+        "name": "DELL Alienware Gaming monitor 24.5 IPS AW2521H",
+        "brandID": 4,
+        "categories": [1],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 830,
+            "currentPrice": 660
+        },
+        "availability": false,
+        "photo": {
+            "src": "monitor9",
+            "alt": "DELL Alienware Gaming monitor 24.5 IPS AW2521H"
+        }
+    },
+    {
+        "id": 24,
+        "name": "DELL Wired keyboard MULTIMEDIA KB216 YU-SRB (Black)",
+        "brandID": 4,
+        "categories": [2],
+        "typeID": 4,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 20
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard6",
+            "alt": "DELL Wired keyboard MULTIMEDIA KB216 YU-SRB (Black)"
+        }
+    },
+    {
+        "id": 25,
+        "name": "HP Wireless mouse Z3700 (Black) V0L79AA",
+        "brandID": 3,
+        "categories": [3],
+        "typeID": 2,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 22
+        },
+        "availability": true,
+        "photo": {
+            "src": "mouse5",
+            "alt": "HP Wireless mouse Z3700 (Black) V0L79AA"
+        }
+    },
+    {
+        "id": 26,
+        "name": "HP Gaming keyboard PAVILION GAMING 800 US (Black) 5JS06AA",
+        "brandID": 3,
+        "categories": [1],
+        "typeID": 4,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 100
+        },
+        "availability": false,
+        "photo": {
+            "src": "keyboard7",
+            "alt": "HP Gaming keyboard PAVILION GAMING 800 US (Black) 5JS06AA"
+        }
+    },
+    {
+        "id": 27,
+        "name": "LOGITECH Wireless mouse Pop Mouse Heartbreaker (Pink) 910-006548",
+        "brandID": 5,
+        "categories": [2, 4],
+        "typeID": 2,
+        "price": {
+            "oldPrice": 60,
+            "currentPrice": 53
+        },
+        "availability": true,
+        "photo": {
+            "src": "mouse6",
+            "alt": "LOGITECH Wireless mouse Pop Mouse Heartbreaker (Pink) 910-006548"
+        }
+    },
+    {
+        "id": 28,
+        "name": "LOGITECH Gaming keyboard G Pro US (Black) 920-009392",
+        "brandID": 5,
+        "categories": [1],
+        "typeID": 4,
+        "price": {
+            "oldPrice": null,
+            "currentPrice": 170
+        },
+        "availability": true,
+        "photo": {
+            "src": "keyboard8",
+            "alt": "LOGITECH Gaming keyboard G Pro US (Black) 920-009392"
+        }
+    },
+    {
+        "id": 29,
+        "name": "PHILIPS Wireless headphones TAKH402BL00 (Blue)",
+        "brandID": 1,
+        "categories": [4],
+        "typeID": 3,
+        "price": {
+            "oldPrice": 100,
+            "currentPrice": 75
+        },
+        "availability": true,
+        "photo": {
+            "src": "headphones6",
+            "alt": "PHILIPS Wireless headphones TAKH402BL00 (Blue)"
+        }
+    },
+    {
+        "id": 30,
+        "name": "PHILIPS Gaming Monitor 27 VA 272E1GAEZ/00",
+        "brandID": 1,
+        "categories": [1],
+        "typeID": 1,
+        "price": {
+            "oldPrice": 360,
+            "currentPrice": 320
+        },
+        "availability": true,
+        "photo": {
+            "src": "monitor10",
+            "alt": "PHILIPS Gaming Monitor 27 VA 272E1GAEZ/00"
+        }
     }
 ]

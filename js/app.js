@@ -67,7 +67,7 @@ window.onload = () => {
         }
     }
 
-    if (window.location.pathname == '/ddtech.github.io/index.html' || window.location.pathname == '/ddtech.github.io/') {
+    if (window.location.pathname == '/index.html' || window.location.pathname == '/') {
         var iconDiv = document.querySelectorAll('.icon-wrapper');
         var textDiv = document.querySelectorAll('.text-wrapper');
     
@@ -77,7 +77,7 @@ window.onload = () => {
         }
     }
 
-    if (window.location.pathname == '/ddtech.github.io/store.html') {
+    if (window.location.pathname == '/store.html') {
         productsInCart = getItemFromLocalStorage('cart');
         
         let brands = [];
@@ -109,8 +109,8 @@ window.onload = () => {
                 success: function(response){
                     callback(response);
                 },
-                error: function(err){
-                    console.log(err);
+                error: function(err) {
+                    alert('An error occurred while getting files.');
                 }
             });
         }
@@ -148,11 +148,22 @@ window.onload = () => {
             });
             document.getElementById('categoryContainer').innerHTML = html;
             categories = data;
+            getData("countries", showCountries);
+        }
+
+        function showCountries(data) {
+            let html = '<option value="choose" selected>Choose...</option>';
+            for (c of data) {
+                html += `<option value="${c.name}">${c.name}</option>`
+            }
+            document.getElementById('country').innerHTML = html;
+            country.addEventListener('change', checkCountry);
+            country.addEventListener('blur', checkCountry);
             $(".brand").change(filterChange);
             $(".type").change(filterChange);
             $(".category").change(filterChange);
             getData("products", showProducts);
-        } 
+        }
         
         function ispisCarta() {
             let html = '';
@@ -192,7 +203,7 @@ window.onload = () => {
                     }
                     document.getElementById('cart').innerHTML = html;
                     $(".remove-from-cart").click(removeFromCart);
-                        function removeFromCart(){
+                    function removeFromCart(){
                         let deleteItem = $(this).data("id");
                         let newArray = [];
                         for(let p of productsInCart){
@@ -204,9 +215,16 @@ window.onload = () => {
                         productsInCart = newArray;
                         setItemToLocalStorage("cart", productsInCart);
                         $(this).parentsUntil("#cart").remove();
-                        cartTotal();
-                        ispisCarta();
-                        cartTotalPrice();
+                        if (productsInCart.length > 0) {
+                            cartTotal();
+                            ispisCarta();
+                            cartTotalPrice();
+                        } else {
+                            cartTotal();
+                            ispisCarta();
+                            $(".total").html("Your cart is empty.");
+                            document.querySelector('.modal-footer').style.display = 'none';
+                        }
                     }
                 }
             } else {
@@ -236,13 +254,26 @@ window.onload = () => {
                         ${checkAvailability(product.availability)}
                     </div>
                     <div class="actions">
-                        <button data-id="${product.id}" ${checkAddToCart(product.availability)}>ADD TO CART</button>
+                        <button class="button${checkAddToCart(product.availability)} data-id="${product.id}">
+                            <span>Add to cart</span>
+                            <div class="cart">
+                                <svg viewBox="0 0 36 26">
+                                    <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
+                                    <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                 </div>
                 `;
             }
             if(data.length < 1) {
-                html = `<p class="text-center w-100 margin-top">No available products</p>`;
+                html = `
+                        <div id="no-results-found">
+                            <img clas="w-100 margin-top" src="img/no-results.jpg" alt="No results found." />
+                            <p class="text-center font-weight-bold w-100">No available products</p>
+                        </div>
+                    `;
             }
             $("#products-wrapper").html(html);
             products = data;
@@ -251,15 +282,16 @@ window.onload = () => {
                 let currentItemId = $(this).data("id");
                 if (productsInCart != undefined && productsInCart && productsInCart.length != 0) {
                     if (alreadyAdded()) {
-                        alert('Pusi kurac');
+                        document.getElementById('alreadyInCart').style.transition = 'all 1s ease-in-out';
+                        document.getElementById('alreadyInCart').style.top = '20px';
+                        setTimeout(`document.getElementById('alreadyInCart').style.top = '-500px'`, 2000);
                     } else {
                         addNew();
-                        cartTotalPrice();
+                        addToCartAnimation(this);
                     }
-                } 
-                else {
+                } else {
                     addFirst();
-                    cartTotalPrice();
+                    addToCartAnimation(this);
                 }
                 function addFirst(){
                     let newProductArray = [];
@@ -329,7 +361,7 @@ window.onload = () => {
                     cartTotal();
                     cartTotalPrice();
             
-                }else{
+                } else {
                     alert("more than one");
                 }
             
@@ -381,9 +413,9 @@ window.onload = () => {
         function checkAddToCart(availability) {
             let html = '';
             if (availability) {
-                html = 'class="add-to-cart"';
+                html = ' add-to-cart"';
             } else {
-                html = 'class="add-to-cart-disabled" disabled';
+                html = ' add-to-cart" disabled';
             }
             return html;
         }
@@ -481,6 +513,7 @@ window.onload = () => {
 
         apply.addEventListener('click', () => {
             document.getElementById('filters-wrapper').classList.remove('filterNarrow');
+            document.getElementById('filters-wrapper').classList.add('filterNarrowOff');
         });
 
         var openCart = document.getElementById('open-cart');
@@ -497,9 +530,8 @@ window.onload = () => {
             }
         
         }
-        function cartTotalPrice(){
-            count = getItemFromLocalStorage("cart").length;
-            if(count > 0) {
+        function cartTotalPrice() {
+            if (localStorage.getItem("cart") !== null || !productsInCart) {
                 let totalCost = $(".item-in-cart-cost").toArray().map(el=>el.innerHTML).reduce((x,y)=>Number(x)+Number(y));
                 $(".total").html(`
     
@@ -510,22 +542,354 @@ window.onload = () => {
     
                 `)
             } else {
-                $(".total").html("empty cart")
+                $(".total").html("Your cart is empty.");
             }
         }
 
         openCart.addEventListener('click', () => {
             productsInCart = getItemFromLocalStorage('cart');
-            cartTotal();
-            ispisCarta();
-            cartTotalPrice();
+            if (localStorage.getItem("cart") !== null && productsInCart.length > 0) {
+                console.log('ok')
+                cartTotal();
+                ispisCarta();
+                cartTotalPrice();
+                document.querySelector('.modal-footer').style.display = 'block';
+            } else {
+                $(".total").html("Your cart is empty.");
+                document.querySelector('.modal-footer').style.display = 'none';
+            }
+            
         })
 
         $("#clear-cart").click(() => {
             localStorage.removeItem("cart");
             cartTotal();
             ispisCarta();
-            cartTotalPrice();
+            $(".total").html("Your cart is empty.");
+        });
+
+        function addToCartAnimation(el) {
+            if(!el.classList.contains('loading')) {
+               el.classList.add('loading');
+                setTimeout(() =>el.classList.remove('loading'), 3700);
+            }
+        }
+
+
+
+        //PROVERA FORME
+
+        
+
+        var fullName = document.getElementById('name');
+        var nameHelp = document.getElementById('nameHelp');
+
+        var email = document.getElementById('email');
+        var emailHelp = document.getElementById('emailHelp');
+
+        var city = document.getElementById('city');
+        var cityHelp = document.getElementById('cityHelp');
+
+        var address = document.getElementById('address');
+        var addressHelp = document.getElementById('addressHelp');
+
+        var checkbox = document.getElementById('checkbox-agree');
+        var checkboxHelp = document.getElementById('checkboxHelp');
+        
+
+        var nameApprove = false;
+        var emailApprove = false;
+        var countryApprove = false;
+        var cityApprove = false;
+        var addressApprove = false;
+        var checkboxApprove = false;
+
+        var nameRegex = /^[A-ZČĆŽĐŠ][a-zćčžđš]{1,14}\s([A-ZČĆŽĐŠ][a-zćčžđš]{1,14})?\s?[A-ZČĆŽŠĐ][a-zćčžđš]{1,19}$/;
+        var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var cityRegex = /^[a-zA-Z\u0080-\u024F]+(?:([\ \-\']|(\.\ ))[a-zA-Z\u0080-\u024F]+)*$/;
+        var addressRegex = /^[A-Za-z0-9\s/-]{5,}$/;
+
+
+        function checkName() {
+            if (fullName.value.match(nameRegex)) {
+                nameHelp.textContent = "";
+                fullName.classList.remove('error');
+                fullName.classList.add('success');
+                nameApprove = true;
+            } else if (fullName.value.length < 1) {
+                nameHelp.textContent = "Field can't be empty.";
+                fullName.classList.remove('success');
+                fullName.classList.add('error');
+                nameApprove = false;
+            } else {
+                nameHelp.textContent = "First and last name have to start with a capital letter - Danilo Draskovic";
+                fullName.classList.remove('success');
+                fullName.classList.add('error');
+                nameApprove = false;
+            }
+        }
+
+        function checkEmail() {
+            if (email.value.match(emailRegex)) {
+                emailHelp.textContent = "";
+                email.classList.remove('error');
+                email.classList.add('success');
+                emailApprove = true;
+            } else if (email.value.length < 1) {
+                emailHelp.textContent = "Field can't be empty.";
+                email.classList.remove('success');
+                email.classList.add('error');
+                emailApprove = false;
+            } else {
+                emailHelp.textContent = "Enter a valid email - danilodraskovic@gmail.com";
+                email.classList.remove('success');
+                email.classList.add('error');
+                emailApprove = false;
+            }
+        }
+
+        function checkCountry() {
+            let selectedValue = country.options[country.selectedIndex].value;
+            console.log = selectedValue;
+            if (selectedValue == "choose") {
+                country.classList.remove('success');
+                country.classList.add('error');
+                countryHelp.textContent = "Please choose the country of your question";
+                countryApprove = false;
+            } else {
+                country.classList.remove('error');
+                country.classList.add('success');
+                countryHelp.textContent = "";
+                countryApprove = true;
+            }
+        }
+
+        function checkCity() {
+            if (city.value.match(cityRegex)) {
+                cityHelp.textContent = "";
+                city.classList.remove('error');
+                city.classList.add('success');
+                cityApprove = true;
+            } else if (city.value.length < 1) {
+                cityHelp.textContent = "Field can't be empty.";
+                city.classList.remove('success');
+                city.classList.add('error');
+                cityApprove = false;
+            } else {
+                cityHelp.textContent = "Enter a valid city - Obrenovac";
+                city.classList.remove('success');
+                city.classList.add('error');
+                cityApprove = false;
+            }
+        }
+
+        function checkAddress() {
+            if (address.value.match(addressRegex)) {
+                addressHelp.textContent = "";
+                address.classList.remove('error');
+                address.classList.add('success');
+                addressApprove = true;
+            } else if (address.value.length < 1) {
+                addressHelp.textContent = "Field can't be empty.";
+                address.classList.remove('success');
+                address.classList.add('error');
+                addressApprove = false;
+            } else {
+                addressHelp.textContent = "Enter a valid address - Kralja Aleksandra 20";
+                address.classList.remove('success');
+                address.classList.add('error');
+                addressApprove = false;
+            }
+        }
+
+        function checkCheckbox() {
+            if (checkbox.checked) {
+                checkbox.classList.add('success');
+                checkboxApprove = true;
+                checkboxHelp.textContent = ""
+            } else {
+                checkbox.classList.remove('success');
+                checkbox.classList.add('error');
+                checkboxApprove = false;
+                checkboxHelp.textContent = "This field is mandatory."
+            }
+        }
+
+        fullName.addEventListener('keyup', checkName);
+        fullName.addEventListener('blur', checkName);
+
+        email.addEventListener('keyup', checkEmail);
+        email.addEventListener('blur', checkEmail);
+
+        country.addEventListener('change', checkCountry);
+        country.addEventListener('blur', checkCountry);
+
+        city.addEventListener('keyup', checkCity);
+        city.addEventListener('blur', checkCity);
+
+        address.addEventListener('keyup', checkAddress);
+        address.addEventListener('blur', checkAddress);
+
+        checkbox.addEventListener('change', checkCheckbox);
+
+        document.getElementById('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            checkName();
+            checkEmail();
+            checkCountry();
+            checkCity();
+            checkAddress();
+            checkCheckbox();
+            if (nameApprove && emailApprove && countryApprove && cityApprove && addressApprove && checkboxApprove) {
+                localStorage.removeItem("cart");
+                document.querySelector('.modal-footer').innerHTML = `
+                    <div id="order-completed">
+                        <div id="order-completed-inner">
+                            <i class="fa-solid fa-truck-ramp-box"></i>
+                            <h2 class="text-center text-success">Your order is on the way</h2>
+                        </div>
+                    </div>
+                `
+                setTimeout("location.reload(true);", 1500);
+            }
+        });
+    }
+
+    if (window.location.pathname == '/contact.html') {
+        var fullName = document.getElementById('name');
+        var nameHelp = document.getElementById('nameHelp');
+
+        var email = document.getElementById('email');
+        var emailHelp = document.getElementById('emailHelp');
+
+        var subject = document.getElementById('subject');
+        var subjectHelp = document.getElementById('subjectHelp');
+
+        var address = document.getElementById('address');
+
+        var message = document.getElementById('message');
+        var messageHelp = document.getElementById('messageHelp');
+
+        var checkbox = document.getElementById('checkbox-agree');
+        var checkboxHelp = document.getElementById('checkboxHelp');
+        
+
+        var nameApprove = false;
+        var emailApprove = false;
+        var subjectApprove = false;
+        var messageApprove = false;
+        var checkboxApprove = false;
+
+        var nameRegex = /^[A-ZČĆŽĐŠ][a-zćčžđš]{1,14}\s([A-ZČĆŽĐŠ][a-zćčžđš]{1,14})?\s?[A-ZČĆŽŠĐ][a-zćčžđš]{1,19}$/;
+        var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+
+        function checkName() {
+            if (fullName.value.match(nameRegex)) {
+                nameHelp.textContent = "";
+                fullName.classList.remove('error');
+                fullName.classList.add('success');
+                nameApprove = true;
+            } else if (fullName.value.length < 1) {
+                nameHelp.textContent = "Field can't be empty.";
+                fullName.classList.remove('success');
+                fullName.classList.add('error');
+                nameApprove = false;
+            } else {
+                nameHelp.textContent = "First and last name have to start with a capital letter - Danilo Draskovic";
+                fullName.classList.remove('success');
+                fullName.classList.add('error');
+                nameApprove = false;
+            }
+        }
+
+        function checkEmail() {
+            if (email.value.match(emailRegex)) {
+                emailHelp.textContent = "";
+                email.classList.remove('error');
+                email.classList.add('success');
+                emailApprove = true;
+            } else if (email.value.length < 1) {
+                emailHelp.textContent = "Field can't be empty.";
+                email.classList.remove('success');
+                email.classList.add('error');
+                emailApprove = false;
+            } else {
+                emailHelp.textContent = "Enter a valid email - danilodraskovic@gmail.com";
+                email.classList.remove('success');
+                email.classList.add('error');
+                emailApprove = false;
+            }
+        }
+
+        function checkSubject() {
+            let selectedValue = subject.options[subject.selectedIndex].value;
+            if (selectedValue == "choose") {
+                subject.classList.remove('success');
+                subject.classList.add('error');
+                subjectHelp.textContent = "Please choose the subject of your question";
+                subjectApprove = false;
+            } else {
+                subject.classList.remove('error');
+                subject.classList.add('success');
+                subjectHelp.textContent = "";
+                subjectApprove = true;
+            }
+        }
+
+        function checkMessage() {
+            if (message.value < 1) {
+                messageHelp.textContent = "Field can't be empty.";
+                message.classList.remove('success');
+                message.classList.add('error');
+                messageApprove = false;
+            } else {
+                messageHelp.textContent = "";
+                message.classList.remove('error');
+                message.classList.add('success');
+                messageApprove = true;
+            }
+        }
+
+        function checkCheckbox() {
+            if (checkbox.checked) {
+                checkbox.classList.add('success');
+                checkboxApprove = true;
+                checkboxHelp.textContent = ""
+            } else {
+                checkbox.classList.remove('success');
+                checkbox.classList.add('error');
+                checkboxApprove = false;
+                checkboxHelp.textContent = "This field is mandatory."
+            }
+        }
+
+        fullName.addEventListener('keyup', checkName);
+        fullName.addEventListener('blur', checkName);
+
+        email.addEventListener('keyup', checkEmail);
+        email.addEventListener('blur', checkEmail);
+
+        subject.addEventListener('change', checkSubject);
+        subject.addEventListener('blur', checkSubject);
+
+        message.addEventListener('blur', checkMessage);
+
+        checkbox.addEventListener('change', checkCheckbox);
+
+        document.getElementById('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            checkName();
+            checkEmail();
+            checkSubject();
+            checkMessage();
+            checkCheckbox();
+            if (nameApprove && emailApprove && subjectApprove && messageApprove && checkboxApprove) {
+                document.getElementById('contact-modal').style.transition = 'all 1s ease-in-out';
+                document.getElementById('contact-modal').style.top = '20px';
+                setTimeout(`document.getElementById('contact-modal').style.top = '-500px'`, 2500);
+                setTimeout("location.reload(true);", 3000);
+            }
         });
     }
 }
