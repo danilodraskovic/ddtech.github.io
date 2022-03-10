@@ -67,7 +67,7 @@ window.onload = () => {
         }
     }
 
-    if (window.location.pathname == '/index.html' || window.location.pathname == '/') {
+    if (window.location.pathname == '/ddtech.github.io/index.html' || window.location.pathname == '/ddtech.github.io/') {
         var iconDiv = document.querySelectorAll('.icon-wrapper');
         var textDiv = document.querySelectorAll('.text-wrapper');
     
@@ -77,7 +77,7 @@ window.onload = () => {
         }
     }
 
-    if (window.location.pathname == '/store.html') {
+    if (window.location.pathname == '/ddtech.github.io/store.html') {
         productsInCart = getItemFromLocalStorage('cart');
         
         let brands = [];
@@ -755,7 +755,7 @@ window.onload = () => {
         });
     }
 
-    if (window.location.pathname == '/contact.html') {
+    if (window.location.pathname == '/ddtech.github.io/contact.html') {
         var fullName = document.getElementById('name');
         var nameHelp = document.getElementById('nameHelp');
 
