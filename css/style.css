@@ -1137,6 +1137,7 @@ label span {
     top: 0;
     left: 0;
     z-index: 999;
+    overflow-y: scroll;
     background-color: #FFF;
     margin: 0;
     -webkit-box-orient: horizontal;

@@ -509,11 +509,13 @@ window.onload = () => {
 
         showFilters.addEventListener('click', () => {
             document.getElementById('filters-wrapper').classList.add('filterNarrow');
+            document.querySelector('body').style.overflow = 'hidden';
         });
 
         apply.addEventListener('click', () => {
             document.getElementById('filters-wrapper').classList.remove('filterNarrow');
             document.getElementById('filters-wrapper').classList.add('filterNarrowOff');
+            document.querySelector('body').style.overflow = 'auto';
         });
 
         var openCart = document.getElementById('open-cart');
@@ -549,7 +551,6 @@ window.onload = () => {
         openCart.addEventListener('click', () => {
             productsInCart = getItemFromLocalStorage('cart');
             if (localStorage.getItem("cart") !== null && productsInCart.length > 0) {
-                console.log('ok')
                 cartTotal();
                 ispisCarta();
                 cartTotalPrice();
